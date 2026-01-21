@@ -1,0 +1,37 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(26, 110, 179);
+    width: fit-content;
+    padding: 20px;
+    margin: 10px auto;
+    border-radius: 10px;
+}
+#result{
+    background-color: #c7c9ca;
+    width: 100%;
+    height: 70px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 36px;
+
+}
+#rows {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+    margin: 5px;
+}
+#rows button{
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+}
+#rows button:hover{
+    background-color: #c7c9ca;
+    cursor: pointer;
+}
