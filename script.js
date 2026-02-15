@@ -8,13 +8,11 @@ let multiplication = document.getElementById('multiplication');
 let division = document.getElementById('division');
 let delelte = document.getElementById('delelte');
 let currentValue = '';
-let operation;
-
 let isResultDisplay = false;
 let displayValue = '';
 
-let firstNum;
-let secondNum;
+let inputs = [];
+let operationsArray = [];
 
 function sum(num1, num2) {
     return num1 + num2;
@@ -31,28 +29,35 @@ function div(num1, num2){
 }
 
 equal.addEventListener('click', function(){
-    if (!operation || currentValue === '') return;
-    secondNum = Number(currentValue);
-    console.log("secondNum: " + secondNum);
-    if(operation === '+'){
-        result.textContent = sum(firstNum, secondNum);
-    }else if(operation === '-'){
-        result.textContent = sub(firstNum, secondNum);
-    }else if(operation === '*'){
-        result.textContent = mult(firstNum, secondNum);
-    }else if (operation === '/') {
-        if (secondNum === 0) {
-            result.textContent = 'Error';
-            currentValue = '';
-            return;
+    if (currentValue === '') return;
+    inputs.push(Number(currentValue));
+    console.log("second number: ", inputs);
+    let firstNum = inputs[0];
+    for(let i = 0 ; i < operationsArray.length; i++){
+        let secondNum = inputs[i + 1];
+        if(operationsArray[i] === '+'){
+        firstNum = sum(firstNum, secondNum);
+        }else if(operationsArray[i] === '-'){
+            firstNum = sub(firstNum, secondNum);
+        }else if(operationsArray[i] === '*'){
+            firstNum = mult(firstNum, secondNum);
+        }else if (operationsArray[i] === '/') {
+            if (inputs[i+1] === 0) {
+                result.textContent = 'Error';
+                currentValue = '';
+                return;
+            }
+            firstNum = div(firstNum, secondNum);
         }
-        result.textContent = div(firstNum, secondNum);
     }
-    currentValue = result.textContent;
-    displayValue = result.textContent;
+    console.log(firstNum);
+    result.textContent = firstNum;
+    
+    currentValue = result.textContent.toString();
+    displayValue = result.textContent.toString();
+    inputs = [];
+    operationsArray = [];
     isResultDisplay = true;
-    operation = null;
-    console.log('displayValue : ' + displayValue );
 })
 
 
@@ -68,51 +73,28 @@ currentNum.forEach(btn => {
             displayValue = displayValue + event.target.textContent;
         }
         result.textContent = displayValue;
-        console.log('displayValue : ' + displayValue );
 
     });
 })
 
 
-addition.addEventListener('click', function(){
+function operations(op){
     if (currentValue === '') return;
-    firstNum = Number(currentValue);
-    operation = "+";
-    displayValue = displayValue + ' + ';
+    inputs.push(Number(currentValue));
+    console.log("first number: ", inputs);
+    operationsArray.push(op);
+    console.log(operationsArray);
+    displayValue = displayValue + ' ' + op + ' ';
     result.textContent = displayValue;
     currentValue = '';
-    console.log("displayValue: " + displayValue);
-})
+    isResultDisplay = false;
+}
 
-substraction.addEventListener('click', function(){
-    if (currentValue === '') return;
-    firstNum = Number(currentValue);
-    operation = "-";
-    displayValue = displayValue + ' - ';
-    result.textContent = displayValue;
-    currentValue = '';
-    console.log("displayValue: " + displayValue);
-})
+addition.addEventListener('click', ()=> operations("+"));
+substraction.addEventListener('click', ()=> operations("-"));
+multiplication.addEventListener('click', ()=> operations("*"));
+division.addEventListener('click', ()=> operations("/"));
 
-multiplication.addEventListener('click', function(){
-    if (currentValue === '') return;
-    firstNum = Number(currentValue);
-    operation = "*";
-    displayValue = displayValue + ' * ';
-    result.textContent = displayValue;
-    currentValue = '';
-    console.log("displayValue: " + displayValue);
-})
-
-division.addEventListener('click', function(){
-    if (currentValue === '') return;
-    firstNum = Number(currentValue);
-    operation = "/";
-    displayValue = displayValue + ' / ';
-    result.textContent = displayValue;
-    currentValue = '';
-    console.log("displayValue: " + displayValue);
-})
 
 clear.addEventListener('click', function () {
     currentValue = '';
@@ -126,5 +108,6 @@ clear.addEventListener('click', function () {
 
 delelte.addEventListener('click', function () {
     currentValue = currentValue.slice(0, -1);
-    result.textContent = currentValue;
+    displayValue = displayValue.slice(0, -1);
+    result.textContent = displayValue;
 });
