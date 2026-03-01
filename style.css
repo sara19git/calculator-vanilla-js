@@ -16,7 +16,8 @@
     display: flex;
     align-items: center;
     font-size: 36px;
-
+    overflow-x: auto;
+    box-sizing: border-box;
 }
 #rows {
     display: grid;
