@@ -7,6 +7,10 @@ let substraction =  document.getElementById('substraction');
 let multiplication = document.getElementById('multiplication');
 let division = document.getElementById('division');
 let delelte = document.getElementById('delelte');
+
+let openParen = document.getElementById('open-paren');
+let closeParen = document.getElementById('close-paren');
+
 let currentValue = '';
 let isResultDisplay = false;
 let displayValue = '';
@@ -15,7 +19,26 @@ let mathExpression = [];
 
 function evaluate(arr){
 
+    
     let temp = [...arr];
+    console.log(temp);
+    /** paretntheses  */
+    while(temp.includes('(')){
+
+        let start = temp.lastIndexOf('(');
+        let end = temp.indexOf(')', start);
+
+        if(end === -1){
+            return 'error';
+        }
+        // extract the nested array
+        let nestedArray = temp.slice(start + 1, end);
+
+        // the function evaluate calls itsef (that's called recursive call)
+        let nestedArrayResult = evaluate(nestedArray);
+
+        temp.splice(start, end - start + 1, nestedArrayResult );
+    }
 
     /** high priority */
     for(let i = 0 ; i<temp.length ; i++){
@@ -59,9 +82,10 @@ function evaluate(arr){
 
 equal.addEventListener('click', function(){
 
-    if(currentValue === '') return;
+    if(currentValue !== '') {
+        mathExpression.push(Number(currentValue));
+    }
 
-    mathExpression.push(Number(currentValue));
 
     let finalResult = evaluate(mathExpression);
 
@@ -113,6 +137,23 @@ substraction.addEventListener('click', ()=> operations("-"));
 multiplication.addEventListener('click', ()=> operations("*"));
 division.addEventListener('click', ()=> operations("/"));
 
+openParen.addEventListener('click', function(){
+    mathExpression.push('(');
+    console.log(mathExpression);
+    displayValue = displayValue + '(';
+    result.textContent = displayValue;
+});
+
+closeParen.addEventListener('click', function(){
+    if(currentValue !== ''){
+        mathExpression.push(Number(currentValue));
+        currentValue = '';
+    }
+    mathExpression.push(')');
+    console.log(mathExpression);
+    displayValue = displayValue + ')';
+    result.textContent = displayValue;
+});
 
 clear.addEventListener('click', function () {
     currentValue = '';
