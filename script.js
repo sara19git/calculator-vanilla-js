@@ -6,7 +6,7 @@ let addition = document.getElementById('addition');
 let substraction =  document.getElementById('substraction');
 let multiplication = document.getElementById('multiplication');
 let division = document.getElementById('division');
-let delelte = document.getElementById('delelte');
+let delet = document.getElementById('delet');
 
 let openParen = document.getElementById('open-paren');
 let closeParen = document.getElementById('close-paren');
@@ -16,6 +16,8 @@ let isResultDisplay = false;
 let displayValue = '';
 
 let mathExpression = [];
+
+
 
 function evaluate(arr){
 
@@ -42,7 +44,7 @@ function evaluate(arr){
 
     /** high priority */
     for(let i = 0 ; i<temp.length ; i++){
-        if(temp[i] === '*' || temp[i] === '/'){
+        if(temp[i].value === '*' || temp[i].value === '/'){
             let result;
 
             if(temp[i] === '*'){
@@ -63,7 +65,7 @@ function evaluate(arr){
     /** low priority */
 
     for(let i = 0; i < temp.length; i++){
-        if(temp[i] === '+' || temp[i] === '-'){
+        if(temp[i].value === '+' || temp[i].value === '-'){
             let result;
 
             if(temp[i] === '+'){
@@ -82,6 +84,7 @@ function evaluate(arr){
 
 equal.addEventListener('click', function(){
 
+    console.log(mathExpression);
     if(currentValue !== '') {
         mathExpression.push(Number(currentValue));
     }
@@ -125,8 +128,11 @@ currentNum.forEach(btn => {
 function operations(op){
     if (currentValue === '') return;
     mathExpression.push(Number(currentValue));
-    mathExpression.push(op);
+    console.log(mathExpression);
+    mathExpression.push({type :'op', value: op});
+    console.log(mathExpression);
     displayValue = displayValue + ' ' + op + ' ';
+    console.log(displayValue)
     result.textContent = displayValue;
     currentValue = '';
     isResultDisplay = false;
@@ -163,7 +169,7 @@ clear.addEventListener('click', function () {
 });
 
 
-delelte.addEventListener('click', function () {
+delet.addEventListener('click', function () {
     currentValue = currentValue.slice(0, -1);
     displayValue = displayValue.slice(0, -1);
     result.textContent = displayValue;
