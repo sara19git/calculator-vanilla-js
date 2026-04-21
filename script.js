@@ -47,7 +47,7 @@ function evaluate(arr){
         if(temp[i].value === '*' || temp[i].value === '/'){
             let result;
 
-            if(temp[i] === '*'){
+            if(temp[i].value === '*'){
                 result = temp[i-1] * temp[i+1];
             }else {
                 if(temp[i+1] === 0) {
@@ -68,7 +68,7 @@ function evaluate(arr){
         if(temp[i].value === '+' || temp[i].value === '-'){
             let result;
 
-            if(temp[i] === '+'){
+            if(temp[i].value === '+'){
                 result = temp[i-1] + temp[i+1];
             }else {
                 result = temp[i-1] - temp[i+1];
