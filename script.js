@@ -25,11 +25,12 @@ function evaluate(arr){
     let temp = [...arr];
     console.log(temp);
     /** paretntheses  */
-    while(temp.includes('(')){
+    while(temp.includes('(')){  // temp = mathExpression = [2, "+", "(", 2 , "+", 2, ")"]
 
         let start = temp.lastIndexOf('(');
         let end = temp.indexOf(')', start);
 
+        // to prevent non closed parentheses
         if(end === -1){
             return 'error';
         }
@@ -42,12 +43,27 @@ function evaluate(arr){
         temp.splice(start, end - start + 1, nestedArrayResult );
     }
 
+    let count = 0;
+    for(let i = 0; i<temp.length; i++){
+        if(temp[i] === '('){
+            count--;
+        }else if(temp[i] === ')'){
+            count++;
+        }
+    }
+
+    for(let i = 0 ; i < temp.length -1; i++){
+        if(temp[i] === 'op' && temp[i+1] === 'op'){
+            alert("Syntax Error");
+        }
+    }
+
     /** high priority */
     for(let i = 0 ; i<temp.length ; i++){
-        if(temp[i].value === '*' || temp[i].value === '/'){
+        if(temp[i] === '*' || temp[i] === '/'){
             let result;
 
-            if(temp[i].value === '*'){
+            if(temp[i] === '*'){
                 result = temp[i-1] * temp[i+1];
             }else {
                 if(temp[i+1] === 0) {
@@ -65,10 +81,10 @@ function evaluate(arr){
     /** low priority */
 
     for(let i = 0; i < temp.length; i++){
-        if(temp[i].value === '+' || temp[i].value === '-'){
+        if(temp[i] === '+' || temp[i] === '-'){
             let result;
 
-            if(temp[i].value === '+'){
+            if(temp[i] === '+'){
                 result = temp[i-1] + temp[i+1];
             }else {
                 result = temp[i-1] - temp[i+1];
@@ -84,11 +100,22 @@ function evaluate(arr){
 
 equal.addEventListener('click', function(){
 
-    console.log(mathExpression);
-    if(currentValue !== '') {
-        mathExpression.push(Number(currentValue));
-    }
+    /*if(!mathExpression.includes(")")){
+        alert("close your parentheses");
+        return;
+    }*/
 
+    if (currentValue === '' || !mathExpression.includes(")") ) {
+       alert("add a second number or close your parentheses");
+       return;
+     }; 
+
+    //console.log(mathExpression);
+   // if(currentValue !== '') {
+        mathExpression.push(Number(currentValue));
+    //}
+
+    console.log("second number:" +currentValue);
 
     let finalResult = evaluate(mathExpression);
 
@@ -126,13 +153,20 @@ currentNum.forEach(btn => {
 
 
 function operations(op){
-    if (currentValue === '') return;
+
+    // to prevent the invalid input + 3 or (+ 3) for example
+    if (currentValue === '') {
+       alert("you can't add operation: add a number or parentheses");
+       return;
+     }; 
+    console.log("first number: " +currentValue);
+
     mathExpression.push(Number(currentValue));
-    console.log(mathExpression);
-    mathExpression.push({type :'op', value: op});
-    console.log(mathExpression);
+    //console.log(mathExpression);
+    mathExpression.push(op);
+    //console.log(mathExpression);
     displayValue = displayValue + ' ' + op + ' ';
-    console.log(displayValue)
+    //console.log(displayValue)
     result.textContent = displayValue;
     currentValue = '';
     isResultDisplay = false;
@@ -144,17 +178,32 @@ multiplication.addEventListener('click', ()=> operations("*"));
 division.addEventListener('click', ()=> operations("/"));
 
 openParen.addEventListener('click', function(){
+
+    /*let lastToken = mathExpression[mathExpression.length -1];
+    let operations = ["+", "-", "/", "*"];
+    if(operations.includes(lastToken)) {
+            return "you can't add operations after parentheses";
+        }*/
+
     mathExpression.push('(');
     console.log(mathExpression);
+
+    
     displayValue = displayValue + '(';
     result.textContent = displayValue;
 });
 
 closeParen.addEventListener('click', function(){
-    if(currentValue !== ''){
+
+    if (currentValue === '') {
+       alert("you can't close parentheses: add a number or parentheses")
+       return; 
+     }; 
+
+  // if(currentValue !== ''){ // to prevent the invalid input (2 + '')
         mathExpression.push(Number(currentValue));
-        currentValue = '';
-    }
+        //currentValue = '';
+   // }
     mathExpression.push(')');
     console.log(mathExpression);
     displayValue = displayValue + ')';
