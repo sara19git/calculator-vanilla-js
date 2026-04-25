@@ -32,7 +32,8 @@ function evaluate(arr){
 
         // to prevent non closed parentheses
         if(end === -1){
-            return 'error';
+            alert("you can't close parenthese")
+            return;
         }
         // extract the nested array
         let nestedArray = temp.slice(start + 1, end);
@@ -105,15 +106,15 @@ equal.addEventListener('click', function(){
         return;
     }*/
 
-    if (currentValue === '' || !mathExpression.includes(")") ) {
+   /* if (currentValue === '' || !mathExpression.includes(")") ) {
        alert("add a second number or close your parentheses");
        return;
-     }; 
+     }; */
 
     //console.log(mathExpression);
-   // if(currentValue !== '') {
+    if(currentValue !== '') {
         mathExpression.push(Number(currentValue));
-    //}
+    }
 
     console.log("second number:" +currentValue);
 
@@ -142,9 +143,10 @@ currentNum.forEach(btn => {
             isResultDisplay = false;
             // else is the ordinary state means enter numbers normally
         } else {
-            currentValue = currentValue + event.target.textContent;
+            currentValue = currentValue + event.target.textContent; 
             displayValue = displayValue + event.target.textContent;
         }
+        
         // show the result on the screen
         result.textContent = displayValue;
 
@@ -155,16 +157,18 @@ currentNum.forEach(btn => {
 function operations(op){
 
     // to prevent the invalid input + 3 or (+ 3) for example
-    if (currentValue === '') {
-       alert("you can't add operation: add a number or parentheses");
+    if (currentValue === '') 
+        {alert("you can't add operation: add a number or parentheses");
        return;
      }; 
     console.log("first number: " +currentValue);
 
     mathExpression.push(Number(currentValue));
     //console.log(mathExpression);
+    console.log("My math expression: mathExpression= " +mathExpression); // ['(', 2]
     mathExpression.push(op);
     //console.log(mathExpression);
+    console.log("My math expression: mathExpression= " +mathExpression); // ['(', 2, '+']
     displayValue = displayValue + ' ' + op + ' ';
     //console.log(displayValue)
     result.textContent = displayValue;
@@ -185,8 +189,8 @@ openParen.addEventListener('click', function(){
             return "you can't add operations after parentheses";
         }*/
 
-    mathExpression.push('(');
-    console.log(mathExpression);
+    mathExpression.push('('); // mathExpression = ['(']
+    console.log("My math expression: mathExpression= " +mathExpression);
 
     
     displayValue = displayValue + '(';
@@ -195,15 +199,17 @@ openParen.addEventListener('click', function(){
 
 closeParen.addEventListener('click', function(){
 
-    if (currentValue === '') {
+    /*if (currentValue === '') {
        alert("you can't close parentheses: add a number or parentheses")
        return; 
-     }; 
+     }; */
 
-  // if(currentValue !== ''){ // to prevent the invalid input (2 + '')
+  if(currentValue !== ''){ // to prevent the invalid input (2 + '')
         mathExpression.push(Number(currentValue));
-        //currentValue = '';
-   // }
+        console.log("My math expression: mathExpression= " +mathExpression); // ['(', 2, '+', 2, ')']
+
+        currentValue = '';
+   }
     mathExpression.push(')');
     console.log(mathExpression);
     displayValue = displayValue + ')';
