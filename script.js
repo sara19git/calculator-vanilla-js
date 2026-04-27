@@ -32,7 +32,7 @@ function evaluate(arr){
 
         // to prevent non closed parentheses
         if(end === -1){
-            alert("you can't close parenthese")
+            alert("error: you have to close parentheses")
             return;
         }
         // extract the nested array
@@ -183,11 +183,11 @@ division.addEventListener('click', ()=> operations("/"));
 
 openParen.addEventListener('click', function(){
 
-    /*let lastToken = mathExpression[mathExpression.length -1];
-    let operations = ["+", "-", "/", "*"];
-    if(operations.includes(lastToken)) {
-            return "you can't add operations after parentheses";
-        }*/
+    
+    if(currentValue !== '' ) {
+        alert("implicit multiplication is not valid currently");
+        return;
+    };
 
     mathExpression.push('('); // mathExpression = ['(']
     console.log("My math expression: mathExpression= " +mathExpression);
@@ -210,6 +210,7 @@ closeParen.addEventListener('click', function(){
 
         currentValue = '';
    }
+   
     mathExpression.push(')');
     console.log(mathExpression);
     displayValue = displayValue + ')';
