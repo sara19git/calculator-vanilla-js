@@ -111,6 +111,11 @@ equal.addEventListener('click', function(){
        return;
      }; */
 
+    //  if(currentValue === ''){
+    //     alert("add a second number");
+    //     return;
+    //  }
+
     //console.log(mathExpression);
     if(currentValue !== '') {
         mathExpression.push(Number(currentValue));
@@ -161,6 +166,8 @@ function operations(op){
         {alert("you can't add operation: add a number or parentheses");
        return;
      }; 
+
+   
     console.log("first number: " +currentValue);
 
     mathExpression.push(Number(currentValue));
@@ -185,11 +192,15 @@ openParen.addEventListener('click', function(){
 
     
     if(currentValue !== '' ) {
-        alert("implicit multiplication is not valid currently");
-        return;
+        mathExpression.push(Number(currentValue));
+        mathExpression.push('*');
+        mathExpression.push('(');
+        currentValue = '';
+        // alert("implicit multiplication is not valid currently");
+        // return;
     };
 
-    mathExpression.push('('); // mathExpression = ['(']
+    //mathExpression.push('('); // mathExpression = ['(']
     console.log("My math expression: mathExpression= " +mathExpression);
 
     
