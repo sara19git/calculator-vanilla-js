@@ -101,28 +101,21 @@ function evaluate(arr){
 
 equal.addEventListener('click', function(){
 
-    /*if(!mathExpression.includes(")")){
-        alert("close your parentheses");
-        return;
-    }*/
-
-   /* if (currentValue === '' || !mathExpression.includes(")") ) {
-       alert("add a second number or close your parentheses");
-       return;
-     }; */
-
-    //  if(currentValue === ''){
-    //     alert("add a second number");
-    //     return;
-    //  }
-
-    //console.log(mathExpression);
     if(currentValue !== '') {
         mathExpression.push(Number(currentValue));
     }
 
     console.log("second number:" +currentValue);
-
+    
+    console.log(mathExpression);
+        
+    let lastElement = mathExpression[mathExpression.length-1];
+    
+    if(lastElement === "+" || lastElement === "-" || lastElement === "*" || lastElement === "/" || lastElement === "("){
+        alert("Error: you should add a second number");
+        return;
+    }
+    
     let finalResult = evaluate(mathExpression);
 
     result.textContent = finalResult;
