@@ -112,7 +112,12 @@ equal.addEventListener('click', function(){
     let lastElement = mathExpression[mathExpression.length-1];
     
     if(lastElement === "+" || lastElement === "-" || lastElement === "*" || lastElement === "/" || lastElement === "("){
-        alert("Error: you should add a second number");
+        alert("Error: you should enter a number");
+        return;
+    }
+
+    if(currentValue === '' && mathExpression.length === 0){
+        alert("Error: enter an expression");
         return;
     }
     
@@ -183,7 +188,7 @@ division.addEventListener('click', ()=> operations("/"));
 
 openParen.addEventListener('click', function(){
 
-    
+    let lastElement = mathExpression[mathExpression.length-1];
     if(currentValue !== '' ) {
         mathExpression.push(Number(currentValue));
         mathExpression.push('*');
@@ -191,7 +196,12 @@ openParen.addEventListener('click', function(){
         currentValue = '';
         // alert("implicit multiplication is not valid currently");
         // return;
-    };
+    }else if(lastElement === ")"){
+        mathExpression.push('*');
+        mathExpression.push('(');
+    } else {
+        mathExpression.push('(');
+    }
 
     //mathExpression.push('('); // mathExpression = ['(']
     console.log("My math expression: mathExpression= " +mathExpression);
