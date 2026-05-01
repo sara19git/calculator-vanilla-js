@@ -160,12 +160,12 @@ currentNum.forEach(btn => {
 function operations(op){
 
     // to prevent the invalid input + 3 or (+ 3) for example
-    if (currentValue === '') 
+    if (currentValue === '' && mathExpression[mathExpression.length -1] !== ")") 
         {alert("you can't add operation: enter a number or add a parentheses");
        return;
      }; 
 
-   
+     
     console.log("first number: " +currentValue);
 
     mathExpression.push(Number(currentValue));
@@ -222,7 +222,7 @@ closeParen.addEventListener('click', function(){
         mathExpression.push(Number(currentValue));
         console.log("My math expression: mathExpression= " +mathExpression); // ['(', 2, '+', 2, ')']
 
-        // currentValue = '+';
+        currentValue = '';
    }
    
     mathExpression.push(')');
