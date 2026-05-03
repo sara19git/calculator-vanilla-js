@@ -32,8 +32,8 @@ function evaluate(arr){
 
         // to prevent non closed parentheses
         if(end === -1){
-            alert("error: you have to close parentheses")
-            return;
+            alert("error: you have to close parentheses");
+            return null;
         }
         // extract the nested array
         let nestedArray = temp.slice(start + 1, end);
@@ -103,6 +103,7 @@ equal.addEventListener('click', function(){
 
     if(currentValue !== '') {
         mathExpression.push(Number(currentValue));
+        currentValue = '';
     }
 
     console.log("second number:" +currentValue);
@@ -122,6 +123,10 @@ equal.addEventListener('click', function(){
     }
     
     let finalResult = evaluate(mathExpression);
+
+    if(finalResult === null) {
+        return;
+    }
 
     result.textContent = finalResult;
     console.log('result: ' +finalResult);
@@ -167,8 +172,10 @@ function operations(op){
 
      
     console.log("first number: " +currentValue);
-
-    mathExpression.push(Number(currentValue));
+     if(currentValue !== ''){
+        mathExpression.push(Number(currentValue));
+     }
+    
     //console.log(mathExpression);
     console.log("My math expression: mathExpression= " +mathExpression); // ['(', 2]
     mathExpression.push(op);
@@ -236,6 +243,7 @@ clear.addEventListener('click', function () {
     displayValue = '';
     mathExpression = [];
     result.textContent = '';
+    isResultDisplay = false;
 });
 
 
